@@ -1,0 +1,21 @@
+{
+  "name": "@parkspace/network",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graphql-codegen --config codegen.ts"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.10.6",
+    "@parcel/watcher": "^2.4.1"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/named-operations-object": "^3.0.0",
+    "@graphql-codegen/typed-document-node": "^5.0.7"
+  }
+}

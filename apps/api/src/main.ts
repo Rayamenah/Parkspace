@@ -4,7 +4,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  app.enableCors()
+  app.enableCors({
+    credentials: true,
+    origin: 'localhost:3000',
+  })
   const config = new DocumentBuilder()
     .setTitle('Parkspace | Raymond Amenah')
     .setDescription(`The parkspace API`)

@@ -3,7 +3,10 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import * as bcrypt from 'bcryptjs'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { v4 as uuid } from 'uuid'
 import {
   LoginInput,
   LoginOutput,
@@ -12,14 +15,14 @@ import {
 } from './dtos/create-user.input'
 import { FindManyUserArgs, FindUniqueUserArgs } from './dtos/find.args'
 import { UpdateUserInput } from './dtos/update-user.input'
-import * as bcrypt from 'bcryptjs'
-import { v4 as uuid } from 'uuid'
-import { JwtService } from '@nestjs/jwt'
+import { Response } from 'express'
 
 @Injectable()
 export class UsersService {
-  jwtService: JwtService
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
   registerWithProvider({ image, name, uid, type }: RegisterWithProviderInput) {
     return this.prisma.user.create({
       data: {
@@ -36,24 +39,26 @@ export class UsersService {
   }
 
   async registerWithCredentials({
-    image,
-    name,
     email,
+    name,
     password,
+    image,
   }: RegisterWithCredentialsInput) {
     const existingUser = await this.prisma.credentials.findUnique({
       where: { email },
     })
+
     if (existingUser) {
-      throw new BadRequestException('User already exists')
+      throw new BadRequestException('User already exists with this email.')
     }
-    //Hash password
+
+    // Hash the password
     const salt = bcrypt.genSaltSync()
     const passwordHash = bcrypt.hashSync(password, salt)
 
     const uid = uuid()
 
-    return await this.prisma.user.create({
+    return this.prisma.user.create({
       data: {
         uid,
         name,
@@ -76,7 +81,10 @@ export class UsersService {
     })
   }
 
-  async login({ email, password }: LoginInput): Promise<LoginOutput> {
+  async login(
+    res: Response,
+    { email, password }: LoginInput,
+  ): Promise<LoginOutput> {
     const user = await this.prisma.user.findFirst({
       where: {
         Credentials: { email },
@@ -87,23 +95,32 @@ export class UsersService {
     })
 
     if (!user) {
-      throw new UnauthorizedException('Invalid email or password')
+      throw new UnauthorizedException('Invalid email or password.')
     }
+
     const isPasswordValid = bcrypt.compareSync(
       password,
       user.Credentials.passwordHash,
     )
+
     if (!isPasswordValid) {
-      throw new UnauthorizedException('invalid email or password')
+      throw new UnauthorizedException('Invalid email or password.')
     }
 
     const jwtToken = this.jwtService.sign(
       { uid: user.uid },
-      { algorithm: 'HS256' },
+      {
+        algorithm: 'HS256',
+      },
     )
+    res.cookie('token', jwtToken, {
+      maxAge: 900000,
+      httpOnly: true,
+    })
 
-    return { token: jwtToken }
+    return { token: jwtToken, user }
   }
+
   findAll(args: FindManyUserArgs) {
     return this.prisma.user.findMany(args)
   }

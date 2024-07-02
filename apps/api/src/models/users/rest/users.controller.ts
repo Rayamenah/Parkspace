@@ -33,12 +33,9 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: UserEntity })
   @Post()
-  async create(
-    @Body() createUserDto: CreateUser,
-    @GetUser() user: GetUserType,
-  ) {
+  create(@Body() createUserDto: CreateUser, @GetUser() user: GetUserType) {
     checkRowLevelPermission(user, createUserDto.uid)
-    return await this.prisma.user.create({ data: createUserDto })
+    return this.prisma.user.create({ data: createUserDto })
   }
 
   @ApiOkResponse({ type: [UserEntity] })
@@ -51,7 +48,7 @@ export class UsersController {
       ...(take ? { take: +take } : null),
       ...(sortBy ? { orderBy: { [sortBy]: order || 'asc' } } : null),
       ...(searchBy
-        ? { where: { [searchBy]: { contaims: search, mode: 'insensitive' } } }
+        ? { where: { [searchBy]: { contains: search, mode: 'insensitive' } } }
         : null),
     })
   }
@@ -65,7 +62,7 @@ export class UsersController {
   @ApiOkResponse({ type: UserEntity })
   @ApiBearerAuth()
   @AllowAuthenticated()
-  @Patch(':id')
+  @Patch(':uid')
   async update(
     @Param('uid') uid: string,
     @Body() updateUserDto: UpdateUser,
@@ -82,7 +79,7 @@ export class UsersController {
   @ApiBearerAuth()
   @AllowAuthenticated()
   @Delete(':uid')
-  async remove(@Param('id') uid: string, @GetUser() user: GetUserType) {
+  async remove(@Param('uid') uid: string, @GetUser() user: GetUserType) {
     const userInfo = await this.prisma.user.findUnique({ where: { uid } })
     checkRowLevelPermission(user, userInfo.uid)
     return this.prisma.user.delete({ where: { uid } })
