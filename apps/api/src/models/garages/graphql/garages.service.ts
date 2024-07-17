@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateSlotInputWithoutGarageId } from 'src/models/slots/graphql/dtos/create-slot.input'
 import { CreateGarageInput } from './dtos/create-garage.input'
 import { FindManyGarageArgs, FindUniqueGarageArgs } from './dtos/find.args'
+import { UpdateGarageInput } from './dtos/update-garage.input'
 
 @Injectable()
 export class GaragesService {
@@ -30,11 +32,11 @@ export class GaragesService {
           images,
         },
       })
-      // const slotsByType = this.groupSlotsByType(Slots, createdGarage.id)
+      const slotsByType = this.groupSlotsByType(Slots, createdGarage.id)
 
-      // const createSlots = await tx.slot.createMany({
-      //   data: slotsByType,
-      // })
+      await tx.slot.createMany({
+        data: slotsByType,
+      })
 
       return createdGarage
     })
@@ -48,13 +50,13 @@ export class GaragesService {
     return this.prisma.garage.findUnique(args)
   }
 
-  // update(updateGarageInput: UpdateGarageInput) {
-  //   const { id, Address, Slots, ...data } = updateGarageInput
-  //   return this.prisma.garage.update({
-  //     where: { id },
-  //     data: data,
-  //   })
-  // }
+  update(updateGarageInput: UpdateGarageInput) {
+    const { id, Address, Slots, ...data } = updateGarageInput
+    return this.prisma.garage.update({
+      where: { id },
+      data: data,
+    })
+  }
 
   remove(args: FindUniqueGarageArgs) {
     return this.prisma.garage.delete(args)

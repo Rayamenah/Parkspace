@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
@@ -27,23 +28,26 @@ export class AuthGuard implements CanActivate {
   }
 
   private async authenticateUser(req: any): Promise<void> {
-    const bearerHeader = req.headers.authorization
-    // Bearer eylskfdjlsdf309
+    const bearerHeader = req.headers['authorization']
+    if (typeof bearerHeader !== 'string') {
+      throw new UnauthorizedException('Authorization header is not a string.')
+    }
     const token = bearerHeader?.split(' ')[1]
-
     if (!token) {
       throw new UnauthorizedException('No token provided.')
     }
+    Logger.log(token)
 
     try {
-      const payload = await this.jwtService.verify(token)
+      const payload = await this.jwtService.verifyAsync(token)
+      console.log('problem1')
       const uid = payload.uid
       if (!uid) {
         throw new UnauthorizedException(
           'Invalid token. No uid present in the token',
         )
       }
-      const user = this.prisma.user.findUnique({ where: { uid } })
+      const user = await this.prisma.user.findUnique({ where: { uid } })
       if (!user) {
         throw new UnauthorizedException(
           'invalid token, no user present with this uid',

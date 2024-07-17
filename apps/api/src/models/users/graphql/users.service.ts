@@ -15,7 +15,7 @@ import {
 } from './dtos/create-user.input'
 import { FindManyUserArgs, FindUniqueUserArgs } from './dtos/find.args'
 import { UpdateUserInput } from './dtos/update-user.input'
-import { Response } from 'express'
+// import { Response } from 'express'
 
 @Injectable()
 export class UsersService {
@@ -82,7 +82,7 @@ export class UsersService {
   }
 
   async login(
-    res: Response,
+    // res: Response,
     { email, password }: LoginInput,
   ): Promise<LoginOutput> {
     const user = await this.prisma.user.findFirst({
@@ -113,11 +113,10 @@ export class UsersService {
         algorithm: 'HS256',
       },
     )
-    res.cookie('token', jwtToken, {
-      maxAge: 900000,
-      httpOnly: true,
-    })
-
+    // res.cookie('token', jwtToken, {
+    //   maxAge: 900000,
+    //   httpOnly: true,
+    // })
     return { token: jwtToken, user }
   }
 

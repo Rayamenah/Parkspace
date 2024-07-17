@@ -1,15 +1,21 @@
+'use client'
 import { useQuery } from '@apollo/client'
 import { CompaniesDocument } from '@parkspace/network/src/gql/generated'
-import { add } from '@parkspace/sample-lib'
-export default function Home() {
-  const { data, error, loading } = useQuery(CompaniesDocument)
+import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 
+export default function Home() {
+  const { data, loading } = useQuery(CompaniesDocument)
+  const [open, setOpen] = useState(false)
   return (
-    <main>
-      Hello {add(33, 44)}
+    <main className="p-8">
       <div>
-        {error && <div>error here</div>}
-        {data?.companies.map((company) => <div key={company.id}></div>)}
+        {data?.companies.map((company) => (
+          <div className="text-black" key={company.id}>
+            <div>{company.displayName}</div>
+            <div>{company.description}</div>
+          </div>
+        ))}
       </div>
     </main>
   )

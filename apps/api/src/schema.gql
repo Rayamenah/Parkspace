@@ -606,11 +606,6 @@ type Review {
   garageId: Int!
 }
 
-type LoginOutput {
-  token: String!
-  user: User!
-}
-
 type Admin {
   uid: String!
   createdAt: DateTime!
@@ -625,6 +620,11 @@ type Valet {
   updatedAt: DateTime!
   displayName: String!
   licenceID: String!
+}
+
+type LoginOutput {
+  token: String!
+  user: User!
 }
 
 type Query {

@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { garages } from './data'
 
-let prisma
+let prisma: PrismaClient
 
 async function main() {
   prisma = new PrismaClient()

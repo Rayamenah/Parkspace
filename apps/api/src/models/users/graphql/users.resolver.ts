@@ -1,30 +1,29 @@
 import {
-  Resolver,
-  Query,
-  Mutation,
   Args,
-  ResolveField,
+  Mutation,
   Parent,
+  Query,
+  ResolveField,
+  Resolver,
 } from '@nestjs/graphql'
-import { UsersService } from './users.service'
-import { AuthProvider, User } from './entity/user.entity'
-import { FindManyUserArgs, FindUniqueUserArgs } from './dtos/find.args'
+import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
+import { checkRowLevelPermission } from 'src/common/auth/util'
+import { PrismaService } from 'src/common/prisma/prisma.service'
+import { GetUserType } from 'src/common/types'
+import { Admin } from 'src/models/admins/graphql/entity/admin.entity'
+import { Customer } from 'src/models/customers/graphql/entity/customer.entity'
+import { Manager } from 'src/models/managers/graphql/entity/manager.entity'
+import { Valet } from 'src/models/valets/graphql/entity/valet.entity'
 import {
   LoginInput,
   LoginOutput,
   RegisterWithCredentialsInput,
   RegisterWithProviderInput,
 } from './dtos/create-user.input'
+import { FindManyUserArgs, FindUniqueUserArgs } from './dtos/find.args'
 import { UpdateUserInput } from './dtos/update-user.input'
-import { checkRowLevelPermission } from 'src/common/auth/util'
-import { GetUserType } from 'src/common/types'
-import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { Admin } from 'src/models/admins/graphql/entity/admin.entity'
-import { Manager } from 'src/models/managers/graphql/entity/manager.entity'
-import { Valet } from 'src/models/valets/graphql/entity/valet.entity'
-import { Customer } from 'src/models/customers/graphql/entity/customer.entity'
-import { Response } from 'express'
+import { AuthProvider, User } from './entity/user.entity'
+import { UsersService } from './users.service'
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -49,8 +48,8 @@ export class UsersResolver {
   }
 
   @Mutation(() => LoginOutput)
-  async login(@Args('loginInput') args: LoginInput, res: Response) {
-    return this.usersService.login(res, args)
+  async login(@Args('loginInput') args: LoginInput) {
+    return this.usersService.login(args)
   }
 
   @AllowAuthenticated()

@@ -12,6 +12,32 @@ mutation RegisterWithCredentials(
   }
 }
 
+mutation Login($loginInput: LoginInput!) {
+  login(loginInput: $loginInput) {
+    token
+    user {
+      uid
+      name
+      image
+    }
+  }
+}
+
+query GetAuthProvider($uid: String!) {
+  getAuthProvider(uid: $uid) {
+    uid
+    type
+  }
+}
+
+mutation RegisterWithProvider(
+  $registerWithProviderInput: RegisterWithProviderInput!
+) {
+  registerWithProvider(registerWithProviderInput: $registerWithProviderInput) {
+    uid
+  }
+}
+
 query Companies(
   $distinct: [CompanyScalarFieldEnum!]
   $orderBy: [CompanyOrderByWithRelationInput!]
@@ -39,31 +65,5 @@ query Companies(
       uid
     }
     updatedAt
-  }
-}
-
-mutation Login($loginInput: LoginInput!) {
-  login(loginInput: $loginInput) {
-    token
-    user {
-      uid
-      name
-      image
-    }
-  }
-}
-
-query GetAuthProvider($uid: String!) {
-  getAuthProvider(uid: $uid) {
-    uid
-    type
-  }
-}
-
-mutation RegisterWithProvider(
-  $registerWithProviderInput: RegisterWithProviderInput!
-) {
-  registerWithProvider(registerWithProviderInput: $registerWithProviderInput) {
-    uid
   }
 }
