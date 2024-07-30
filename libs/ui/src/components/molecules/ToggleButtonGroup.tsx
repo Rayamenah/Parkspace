@@ -16,13 +16,13 @@ ToggleButtonGroup.displayName = 'ToggleButtonGroup'
 export const ToggleButton = (props: ToggleButtonProps) => (
   <ToggleButtonMui
     classes={{
-      root: 'rounded-none transition-all',
+      root: 'rounded-sm transition-all',
       selected: 'border border-black bg-white shadow-lg',
       //   standard: 'bg-gray-50 ',
     }}
-    disableRipple
-    disableTouchRipple
-    disableFocusRipple
+    // disableRipple
+    // disableTouchRipple
+    // disableFocusRipplea
     {...props}
   />
 )

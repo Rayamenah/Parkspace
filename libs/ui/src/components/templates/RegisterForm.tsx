@@ -21,7 +21,7 @@ export const RegisterForm = ({ className, role }: ISignupFormProps) => {
     formState: { errors },
   } = useFormRegister()
 
-  const [registerWithCredentials, { loading, data }] = useMutation(
+  const [registerWithCredentials, { loading }] = useMutation(
     RegisterWithCredentialsDocument,
   )
 
@@ -36,14 +36,17 @@ export const RegisterForm = ({ className, role }: ISignupFormProps) => {
 
         if (errors) {
           alert(errors)
+          formData.email = ''
+          formData.password = ''
         }
 
+        //sign in after registration
         if (data) {
           alert(`User ${data.registerWithCredentials.uid} created. 🎉`)
           signIn('credentials', {
             email: formData.email,
             password: formData.password,
-            // callbackUrl: '/',
+            callbackUrl: '/',
           })
         }
       })}

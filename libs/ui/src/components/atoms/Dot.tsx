@@ -8,8 +8,8 @@ export const PulsingDot = ({ children }: BaseComponent) => {
       </div>
     )
   return (
-    <div className="absolute top-0 left-full animate-pulse">
-      <div className="w-2 h-2 rounded-full bg-primary-500" />
+    <div className="absolute top-0 left-full ">
+      <div className="w-2 h-2 rounded-full bg-primary-600 animate-pulse" />
     </div>
   )
 }

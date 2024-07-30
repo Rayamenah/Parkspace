@@ -6,7 +6,7 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form'
-import { useDebounce } from '@parkspace/util/hooks/async'
+import { useDebounce } from '@parkspace/util/hooks/useDebounce'
 import { intFilter } from './util'
 
 type FormData = Partial<

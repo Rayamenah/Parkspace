@@ -1,5 +1,6 @@
 import MapGl, { useMap } from 'react-map-gl'
 
+//height is passed as a property because map will be used in multiple places
 type MapProps = React.ComponentProps<typeof MapGl> & { height?: string }
 
 export const Map = ({ height = 'calc(100vh - 4rem)', ...props }: MapProps) => {

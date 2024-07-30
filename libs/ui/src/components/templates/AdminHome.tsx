@@ -1,5 +1,5 @@
 'use client'
-import { useTakeSkip } from '@parkspace/util/hooks/pagination'
+import { useTakeSkip } from '@parkspace/util/hooks/usePagination'
 import { useQuery } from '@apollo/client'
 import { GaragesDocument } from '@parkspace/network/src/gql/generated'
 import { ShowData } from '../organisms/ShowData'

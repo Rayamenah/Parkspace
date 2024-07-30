@@ -1,5 +1,6 @@
 import MuiAutocomplete, { AutocompleteProps } from '@mui/material/Autocomplete'
 import { IconSearch } from '@tabler/icons-react'
+
 type AutocompleteSimplifiedProps<T> = Omit<
   AutocompleteProps<T, false, false, false>,
   'renderInput'
@@ -16,14 +17,13 @@ export const Autocomplete = <T,>({
       autoSelect
       handleHomeEndKeys
       classes={{
-        root: ' font-light  ',
+        root: ' font-light',
         input: 'p-2',
         noOptions: ' backdrop-filter backdrop-blur',
         loading: ' backdrop-filter backdrop-blur',
         listbox: 'p-0  backdrop-filter backdrop-blur max-h-64',
         option: 'hover:bg-white bg-opacity-100',
-        paper:
-          ' shadow-md border border-white mt-1 bg-transparent rounded-none',
+        paper: 'shadow-md border border-white mt-1 bg-transparent rounded-none',
       }}
       renderInput={(params) => (
         <div

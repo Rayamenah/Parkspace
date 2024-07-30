@@ -3,7 +3,7 @@ import {
   ValetPickupsDocument,
 } from '@parkspace/network/src/gql/generated'
 import { useQuery } from '@apollo/client'
-import { useTakeSkip } from '@parkspace/util/hooks/pagination'
+import { useTakeSkip } from '@parkspace/util/hooks/usePagination'
 import { ShowData } from './ShowData'
 import { ValetTripCard } from './ValetTripCard'
 import { AssignValetButton } from './AssignValetButton'

@@ -41,6 +41,7 @@ export const formSchemaSearchGarage = z
 
 export type FormTypeSearchGarage = z.infer<typeof formSchemaSearchGarage>
 
+//set start time to 5 mins after booking and end time 1 hour after start time
 export const getCurrentTimeAndOneHourLater = () => {
   const startTime = new Date()
   startTime.setMinutes(startTime.getMinutes() + 5)
@@ -61,6 +62,7 @@ export const AllSlotTypes = [
   SlotType.Heavy,
 ]
 
+//default values of the form
 export const formDefaultValuesSearchGarages: DefaultValues<FormTypeSearchGarage> =
   {
     pricePerHour: [0, 200],
@@ -76,6 +78,7 @@ export const FormProviderSearchGarage = ({
   children: ReactNode
 }) => {
   const { startTime, endTime } = getCurrentTimeAndOneHourLater()
+  //set default values of form
   const methods = useForm<FormTypeSearchGarage>({
     resolver: zodResolver(formSchemaSearchGarage),
     defaultValues: {

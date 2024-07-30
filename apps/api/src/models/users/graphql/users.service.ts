@@ -15,7 +15,6 @@ import {
 } from './dtos/create-user.input'
 import { FindManyUserArgs, FindUniqueUserArgs } from './dtos/find.args'
 import { UpdateUserInput } from './dtos/update-user.input'
-// import { Response } from 'express'
 
 @Injectable()
 export class UsersService {
@@ -93,7 +92,6 @@ export class UsersService {
         Credentials: true,
       },
     })
-
     if (!user) {
       throw new UnauthorizedException('Invalid email or password.')
     }
@@ -113,10 +111,6 @@ export class UsersService {
         algorithm: 'HS256',
       },
     )
-    // res.cookie('token', jwtToken, {
-    //   maxAge: 900000,
-    //   httpOnly: true,
-    // })
     return { token: jwtToken, user }
   }
 

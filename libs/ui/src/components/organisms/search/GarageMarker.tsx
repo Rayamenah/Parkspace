@@ -1,5 +1,5 @@
 import { SearchGaragesQuery } from '@parkspace/network/src/gql/generated'
-import { useKeypress } from '@parkspace/util/hooks/keys'
+import { useKeypress } from '@parkspace/util/hooks/useKeyPress'
 import { useState } from 'react'
 import { Marker } from '../map/MapMarker'
 import { Dialog } from '../../atoms/Dialog'
@@ -14,7 +14,7 @@ export const GarageMarker = ({
 }: {
   marker: SearchGaragesQuery['searchGarages'][number]
 }) => {
-  const [showPopup, setShowPopup] = useState(false)
+  const [showPopup, setShowPopup] = useState<boolean>(false)
   useKeypress(['Escape'], () => setShowPopup(false))
 
   const { endTime, startTime } = useWatch<FormTypeSearchGarage>()
@@ -39,7 +39,7 @@ export const GarageMarker = ({
       <Marker
         latitude={marker.address.lat}
         longitude={marker.address.lng}
-        onClick={(e) => {
+        onClick={(e: { originalEvent: { stopPropagation: () => void } }) => {
           e.originalEvent.stopPropagation()
           setShowPopup((state) => !state)
         }}

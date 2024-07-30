@@ -1,40 +1,35 @@
 'use client'
+import { initialViewState } from '@parkspace/util/constants'
 import { useCallback } from 'react'
+import { ViewStateChangeEvent } from 'react-map-gl'
 import { Map } from '../organisms/map/Map'
 import { Panel } from '../organisms/map/Panel'
-import { DefaultZoomControls } from '../organisms/map/ZoomControls'
-import { ViewStateChangeEvent } from 'react-map-gl'
-import { initialViewState } from '@parkspace/util/constants'
 import { SearchPlaceBox } from '../organisms/map/SearchPlacesBox'
-import { useFormContext } from 'react-hook-form'
+import { DefaultZoomControls } from '../organisms/map/ZoomControls'
 import { FormTypeSearchGarage } from '@parkspace/forms/src/searchGarages'
-import { IconType } from '../molecules/IconTypes'
+import { useFormContext } from 'react-hook-form'
+import { toLocalISOString } from '@parkspace/util/date'
 import { IconArrowDown } from '@tabler/icons-react'
 import { HtmlInput } from '../atoms/HtmlInput'
-import { toLocalISOString } from '@parkspace/util/date'
+import { IconType } from '../molecules/IconTypes'
 import { ShowGarages } from '../organisms/search/ShowGarages'
 import { FilterSidebar } from '../organisms/search/FilterSidebar'
 
 export const SearchPage = () => {
-  const {
-    register,
-    setValue,
-    watch,
-    formState: { errors },
-    trigger,
-  } = useFormContext<FormTypeSearchGarage>()
-  console.log('errors ', errors)
+  const { register, setValue, watch, trigger } =
+    useFormContext<FormTypeSearchGarage>()
   const formData = watch()
-
   const handleMapChange = useCallback(
-    (target: ViewStateChangeEvent['target']) => {
-      const bounds = target.getBounds()
+    (targets: ViewStateChangeEvent['target']) => {
+      const bounds = targets.getBounds()
+
       const locationFilter = {
         ne_lat: bounds?.getNorthEast().lat || 0,
         ne_lng: bounds?.getNorthEast().lng || 0,
         sw_lat: bounds?.getSouthWest().lat || 0,
         sw_lng: bounds?.getSouthWest().lng || 0,
       }
+      console.log('location:', locationFilter)
       setValue('locationFilter', locationFilter)
     },
     [setValue],
@@ -48,7 +43,7 @@ export const SearchPage = () => {
       initialViewState={initialViewState}
     >
       <ShowGarages />
-      <Panel position="left-top">
+      <Panel position="left-top" className="mt-20">
         <div className="flex flex-col items-stretch">
           <SearchPlaceBox />
           <div className="flex relative pl-1 flex-col mt-1 bg-white/40 items-center gap-1 backdrop-blur-sm">
@@ -62,9 +57,9 @@ export const SearchPage = () => {
                 className="w-full p-2 text-lg font-light border-0"
                 min={toLocalISOString(new Date()).slice(0, 16)}
                 {...register('startTime', {
-                  onChange(event) {
+                  onChange() {
                     trigger('startTime')
-                    trigger('endTime')
+                    // trigger('endTime')
                   },
                 })}
               />
@@ -76,7 +71,7 @@ export const SearchPage = () => {
                 type="datetime-local"
                 className="w-full p-2 text-lg font-light border-0"
                 {...register('endTime', {
-                  onChange(event) {
+                  onChange() {
                     trigger('endTime')
                   },
                 })}
@@ -88,18 +83,7 @@ export const SearchPage = () => {
       <Panel position="right-center">
         <DefaultZoomControls />
       </Panel>
-      {errors ? (
-        <Panel position="center-bottom">
-          {Object.entries(errors).map(([key, value]) => {
-            return (
-              <div className="text-red-800 p-2 shadow bg-white" key={key}>
-                {key}: {value.message}
-              </div>
-            )
-          })}
-        </Panel>
-      ) : null}
-      <Panel position="right-top">
+      <Panel position="right-top" className="mt-20">
         <FilterSidebar />
       </Panel>
     </Map>

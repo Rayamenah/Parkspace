@@ -30,6 +30,7 @@ import {
 import { GarageWhereInput } from './dtos/where.args'
 import { Garage, SlotTypeCount } from './entity/garage.entity'
 import { GaragesService } from './garages.service'
+import { UpdateGarageInput } from './dtos/update-garage.input'
 
 @Resolver(() => Garage)
 export class GaragesResolver {
@@ -192,22 +193,22 @@ export class GaragesResolver {
     }))
   }
 
-  // @AllowAuthenticated()
-  // @Mutation(() => Garage)
-  // async updateGarage(
-  //   @Args('updateGarageInput') args: UpdateGarageInput,
-  //   @GetUser() user: GetUserType,
-  // ) {
-  //   const garage = await this.prisma.garage.findUnique({
-  //     where: { id: args.id },
-  //     include: { Company: { include: { Managers: true } } },
-  //   })
-  //   checkRowLevelPermission(
-  //     user,
-  //     garage.Company.Managers.map((man) => man.uid),
-  //   )
-  //   return this.garagesService.update(args)
-  // }
+  @AllowAuthenticated()
+  @Mutation(() => Garage)
+  async updateGarage(
+    @Args('updateGarageInput') args: UpdateGarageInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const garage = await this.prisma.garage.findUnique({
+      where: { id: args.id },
+      include: { Company: { include: { Managers: true } } },
+    })
+    checkRowLevelPermission(
+      user,
+      garage.Company.Managers.map((man) => man.uid),
+    )
+    return this.garagesService.update(args)
+  }
 
   @AllowAuthenticated()
   @Mutation(() => Garage)

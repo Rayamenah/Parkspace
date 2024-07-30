@@ -17,14 +17,14 @@ import { IconTypes } from '../molecules/IconTypes'
 import { FormError } from '../atoms/FormError'
 import { HtmlInput } from '../atoms/HtmlInput'
 import { toLocalISOString } from '@parkspace/util/date'
-import { useTotalPrice } from '@parkspace/util/hooks/price'
+import { useTotalPrice } from '@parkspace/util/hooks/useTotalPrice'
 import { CostTitleValue } from '../molecules/CostTitleValue'
 import { Button } from '../atoms/Button'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { TotalPrice } from '@[arkspace]/util/types'
+import { TotalPrice } from '@parkspace/util/types'
 import { ManageValets } from './ManageValets'
-import { toast } from '../molecules/Toast'
+import { toast } from 'react-toastify'
 
 export const BookSlotPopup = ({
   garage,
@@ -41,8 +41,7 @@ export const BookSlotPopup = ({
     formState: { errors },
   } = useFormContext<FormTypeBookSlot>()
 
-  const { startTime, endTime, phoneNumber, type, valet, vehicleNumber } =
-    useWatch<FormTypeBookSlot>()
+  const { startTime, endTime, type } = useWatch<FormTypeBookSlot>()
 
   const pricePerHour = garage.availableSlots.find(
     (slot) => slot.type === type,

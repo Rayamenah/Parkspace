@@ -1,7 +1,7 @@
 import { LocationInfo, ViewState } from '@parkspace/util/types'
 import { useMap } from 'react-map-gl'
 import { Autocomplete } from '../../atoms/Autocomplete'
-import { useSearchLocation } from '@parkspace/util/hooks/location'
+import { useSearchLocation } from '@parkspace/util/hooks/useSearchLocation'
 import { majorCitiesLocationInfo } from '@parkspace/util/constants'
 
 export const SearchPlaceBox = ({
@@ -12,7 +12,6 @@ export const SearchPlaceBox = ({
   const { current: map } = useMap()
   const { loading, locationInfo, searchText, setLoading, setSearchText } =
     useSearchLocation()
-
   return (
     <Autocomplete<LocationInfo>
       options={locationInfo?.length ? locationInfo : majorCitiesLocationInfo}
@@ -21,15 +20,15 @@ export const SearchPlaceBox = ({
       }
       noOptionsText={searchText ? 'No options.' : 'Type something...'}
       getOptionLabel={(x) => x.placeName}
-      onInputChange={(_, v) => {
+      onInputChange={(_, e) => {
         setLoading(true)
-        setSearchText(v)
+        setSearchText(e)
       }}
       loading={loading}
       onChange={async (_, v) => {
         if (v) {
           const { latLng, placeName } = v
-          await map?.flyTo({
+          map?.flyTo({
             center: { lat: latLng[0], lng: latLng[1] },
             zoom: 12,
             // essential: true,

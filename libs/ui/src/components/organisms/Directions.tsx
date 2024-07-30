@@ -1,4 +1,4 @@
-import { useDebounce } from '@parkspace/util/hooks/async'
+import { useDebounce } from '@parkspace/util/hooks/useDebounce'
 import { LatLng, LngLatTuple } from '@parkspace/util/types'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Source, Layer } from 'react-map-gl'

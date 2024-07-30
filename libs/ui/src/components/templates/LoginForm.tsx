@@ -28,9 +28,9 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
         const result = await signIn('credentials', {
           email,
           password,
-          redirects: false,
+          redirects: true,
         })
-
+        console.log(result)
         if (result?.ok) {
           replace('/')
         }

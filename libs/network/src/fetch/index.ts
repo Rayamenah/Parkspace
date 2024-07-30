@@ -1,7 +1,8 @@
 import { TypedDocumentNode } from '@apollo/client/core/types'
 import { print } from 'graphql'
-export interface FetchResult<Tdata> {
-  data?: Tdata
+
+export interface FetchResult<TData> {
+  data?: TData
   error?: string
 }
 
@@ -20,8 +21,7 @@ export interface GraphqlRequestOptions<TData, V> {
  * @param {RequestInit} [config] - Optional configuration for the fetch request.
  *
  * @returns {Promise<FetchResult<TData>>} The result of the GraphQL request.
- **/
-
+ */
 export async function fetchGraphQL<TData, V>({
   document,
   variables,
@@ -42,9 +42,8 @@ export async function fetchGraphQL<TData, V>({
     const { data, errors } = await res.json()
     if (errors) {
       console.log('Error', JSON.stringify(errors))
-      return { errors: JSON.stringify(errors[0].message) }
+      return { error: JSON.stringify(errors[0].message) }
     }
-
-    return data
+    return { data }
   })
 }

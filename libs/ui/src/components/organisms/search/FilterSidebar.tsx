@@ -2,19 +2,19 @@ import {
   FormTypeSearchGarage,
   formDefaultValuesSearchGarages,
 } from '@parkspace/forms/src/searchGarages'
-import { useState } from 'react'
-import { useFormContext, Controller } from 'react-hook-form'
-import { Button } from '../../atoms/Button'
 import { IconFilter } from '@tabler/icons-react'
+import { useState } from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
+import { Button } from '../../atoms/Button'
 import { PulsingDot } from '../../atoms/Dot'
-import { Sidebar } from '../Sidebar'
-import { RangeSlider } from '../../molecules/RangeSlider'
-import {
-  ToggleButtonGroup,
-  ToggleButton,
-} from '../../molecules/ToggleButtonGroup'
 import { FilterHeading } from '../../molecules/FilterHeading'
 import { IconTypes } from '../../molecules/IconTypes'
+import { RangeSlider } from '../../molecules/RangeSlider'
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+} from '../../molecules/ToggleButtonGroup'
+import { Sidebar } from '../Sidebar'
 
 export const FilterSidebar = () => {
   const [open, setOpen] = useState(false)

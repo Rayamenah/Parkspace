@@ -49,18 +49,18 @@ export const authOptions: NextAuthOptions = {
             variables: { loginInput: { email, password } },
           })
 
+          console.log(data)
           if (!data?.login.token || error) {
             throw new Error(
               'Authentication failed: Invalid credentials or user not found',
             )
           }
-          const uid = data.login.user.uid
-          const image = data.login.user.image
-          const name = data.login.user.name
+
+          const { uid, image, name } = data.login.user
 
           return { id: uid, name, image, email }
         } catch (err) {
-          console.log('error here')
+          console.log('error here', err)
           return null
         }
       },

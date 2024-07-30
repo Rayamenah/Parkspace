@@ -1,7 +1,5 @@
 import { MouseEventHandler, ReactNode } from 'react'
-
 import { IconMinus, IconParking, IconPlus } from '@tabler/icons-react'
-
 import { useMap } from 'react-map-gl'
 
 export interface IZoomControlsProps {}
@@ -47,13 +45,14 @@ const ZoomOut = () => {
   )
 }
 
+type CenterOfMapProps = {
+  onClick: (latLng: { lng: number; lat: number }) => void
+  Icon?: typeof IconParking
+}
 export const CenterOfMap = ({
   onClick,
   Icon = IconParking,
-}: {
-  onClick: (latLng: { lng: number; lat: number }) => void
-  Icon?: typeof IconParking
-}) => {
+}: CenterOfMapProps) => {
   const { current: map } = useMap()
   return (
     <ZoomControlButton

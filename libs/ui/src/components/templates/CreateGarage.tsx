@@ -5,7 +5,7 @@ import {
   useFormCreateGarage,
 } from '@parkspace/forms/src/createGarage'
 import { useMutation } from '@apollo/client'
-import { useCloudinaryUpload } from '@parkspace/util/hooks/cloudinary'
+import { useCloudinaryUpload } from '@parkspace/util/hooks/useCloudinary'
 import {
   CreateGarageDocument,
   namedOperations,

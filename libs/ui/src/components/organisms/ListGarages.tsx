@@ -2,9 +2,9 @@ import {
   GaragesDocument,
   MyCompanyQuery,
 } from '@parkspace/network/src/gql/generated'
-import { useTakeSkip } from '@parkspace/util/hooks/pagination'
+import { useTakeSkip } from '@parkspace/util/hooks/usePagination'
 import { useQuery } from '@apollo/client'
-import {} from '@parkspace/network/src/gql/generated'
+import { } from '@parkspace/network/src/gql/generated'
 import { ShowData } from './ShowData'
 import { dividerClasses } from '@mui/material'
 import { IconPlus } from '@tabler/icons-react'

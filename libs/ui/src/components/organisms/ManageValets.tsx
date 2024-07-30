@@ -1,6 +1,6 @@
 import { SearchGaragesQuery } from '@parkspace/network/src/gql/generated'
 import { useState } from 'react'
-import { toast } from '../molecules/Toast'
+import { toast } from 'react-toastify'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { FormTypeBookSlot } from '@parkspace/forms/src/bookSlot'
 import { Switch } from '../atoms/Switch'

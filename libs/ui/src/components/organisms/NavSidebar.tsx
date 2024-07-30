@@ -2,7 +2,7 @@
 import { IconMenu2 } from '@tabler/icons-react'
 import Link from 'next/link'
 import { Sidebar } from './Sidebar'
-import { useDialogState } from '@parkspace/util/hooks/dialog'
+import { useDialogState } from '@parkspace/util/hooks/useDialogue'
 
 import { MenuItem } from '@parkspace/util/types'
 import { LogoutButton } from '../molecules/LogoutButton'
@@ -17,7 +17,7 @@ export const NavSidebar = ({ menuItems }: INavSidebarProps) => {
   const [open, setOpen] = useDialogState()
 
   return (
-    <>
+    <div className="block sm:hidden">
       <button
         type="button"
         onClick={() => setOpen((state: boolean) => !state)}
@@ -35,6 +35,6 @@ export const NavSidebar = ({ menuItems }: INavSidebarProps) => {
           <LogoutButton />
         </div>
       </Sidebar>
-    </>
+    </div>
   )
 }

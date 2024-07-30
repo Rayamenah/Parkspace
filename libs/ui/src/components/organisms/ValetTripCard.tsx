@@ -1,4 +1,4 @@
-import { useMapboxDirections } from '@parkspace/util/hooks/directions'
+import { useMapboxDirections } from '@parkspace/util/hooks/useDirections'
 import { LatLng } from '@parkspace/util/types'
 import { isLatLng } from '@parkspace/util'
 import { ReactNode } from 'react'

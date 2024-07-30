@@ -1,55 +1,36 @@
 import { useLazyQuery } from '@apollo/client'
+import { useConvertSearchFormToVariables } from '@parkspace/forms/src/adapters/searchFormAdapter'
 import { SearchGaragesDocument } from '@parkspace/network/src/gql/generated'
 import { useEffect } from 'react'
-import { GarageMarker } from './GarageMarker'
-import { useConvertSearchFormToVariables } from '@parkspace/forms/src/adapters/searchFormAdapter'
-import { Panel } from '../map/Panel'
 import { Loader } from '../../molecules/Loader'
+import { Panel } from '../map/Panel'
+import { GarageMarker } from './GarageMarker'
 import { IconInfoCircle } from '@tabler/icons-react'
-import { toast } from '../../molecules/Toast'
 
 export const ShowGarages = () => {
+  const [searchGarages, { loading, data, error }] = useLazyQuery(
+    SearchGaragesDocument,
+  )
+
   const { variables, debouncing } = useConvertSearchFormToVariables()
 
-  const [
-    searchGarages,
-    { loading: garagesLoading, data, previousData, error },
-  ] = useLazyQuery(SearchGaragesDocument)
-
   useEffect(() => {
-    if (variables) {
-      searchGarages({ variables })
-    }
-  }, [variables])
+    if (variables) searchGarages({ variables })
+  }, [searchGarages, variables])
 
-  const garages = data?.searchGarages || previousData?.searchGarages || []
-  const loading = debouncing || garagesLoading
-
-  if (error) {
+  if (data?.searchGarages.length === 0) {
     return (
       <Panel
         position="center-center"
         className="bg-white/50 shadow border-white border backdrop-blur-sm"
       >
-        <div className="flex items-center justify-center gap-2 ">
-          <IconInfoCircle /> <div>{error.message}</div>
+        <div className="flex items-center justify-center gap-2">
+          <IconInfoCircle />
+          <div>No parking slots found in this area</div>
         </div>
       </Panel>
     )
   }
-  if (!loading && garages.length === 0) {
-    return (
-      <Panel
-        position="center-center"
-        className="bg-white/50 shadow border-white border backdrop-blur-sm"
-      >
-        <div className="flex items-center justify-center gap-2 ">
-          <IconInfoCircle /> <div>No parking slots found in this area.</div>
-        </div>
-      </Panel>
-    )
-  }
-
   return (
     <>
       {loading ? (
@@ -57,7 +38,7 @@ export const ShowGarages = () => {
           <Loader />
         </Panel>
       ) : null}
-      {garages.map((garage) => (
+      {data?.searchGarages.map((garage) => (
         <GarageMarker key={garage.id} marker={garage} />
       ))}
     </>
