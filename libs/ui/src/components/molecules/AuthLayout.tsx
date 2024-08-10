@@ -14,7 +14,7 @@ export interface IAuthLayoutProps {
 
 export const AuthLayout = ({ title, children }: IAuthLayoutProps) => {
   return (
-    <div className="relative h-[calc(100vh)]  ">
+    <div className="relative h-[calc(100vh-4rem)]">
       {/* <CarScene
         orbitControls={false}
         camera={<RotatingCamera />}

@@ -1,18 +1,14 @@
 import { FormTypeCreateGarage } from '@parkspace/forms/src/createGarage'
-import { ViewState } from '@parkspace/util/types'
-import { useEffect } from 'react'
-import { useWatch, useFormContext, useFieldArray } from 'react-hook-form'
-import { Marker } from '../organisms/map/MapMarker'
-import { ParkingIcon } from '../atoms/ParkingIcon'
-import { initialViewState } from '@parkspace/util/constants'
-import { dividerClasses } from '@mui/material'
+import { SlotType } from '@parkspace/network/src/gql/generated'
+import { IconPlus } from '@tabler/icons-react'
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { Accordion } from '../atoms/Accordion'
 import { Button } from '../atoms/Button'
-import { IconPlus } from '@tabler/icons-react'
-import { SlotType } from '@parkspace/network/src/gql/generated'
+import { HtmlInput } from '../atoms/HtmlInput'
 import { HtmlLabel } from '../atoms/HtmlLabel'
 import { HtmlSelect } from '../atoms/HtmlSelect'
-import { HtmlInput } from '../atoms/HtmlInput'
+import { ParkingIcon } from '../atoms/ParkingIcon'
+import { Marker } from '../organisms/map/MapMarker'
 
 export const GarageMapMarker = () => {
   const { location } = useWatch<FormTypeCreateGarage>()
@@ -106,7 +102,7 @@ export const AddSlots = () => {
             </HtmlLabel>
 
             <HtmlLabel
-              title="Number of slots"
+              title="Slots no"
               optional
               error={errors.slotTypes?.[slotIndex]?.count?.message}
             >
@@ -139,7 +135,7 @@ export const AddSlots = () => {
             >
               <HtmlInput
                 type="number"
-                placeholder="Enter the description"
+                placeholder="Enter vehicle height"
                 {...register(`slotTypes.${slotIndex}.width`, {
                   valueAsNumber: true,
                 })}
@@ -152,7 +148,7 @@ export const AddSlots = () => {
             >
               <HtmlInput
                 type="number"
-                placeholder="Enter the description"
+                placeholder="Enter vehicle width"
                 {...register(`slotTypes.${slotIndex}.height`, {
                   valueAsNumber: true,
                 })}

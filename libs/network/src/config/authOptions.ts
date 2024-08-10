@@ -48,8 +48,6 @@ export const authOptions: NextAuthOptions = {
             document: LoginDocument,
             variables: { loginInput: { email, password } },
           })
-
-          console.log(data)
           if (!data?.login.token || error) {
             throw new Error(
               'Authentication failed: Invalid credentials or user not found',

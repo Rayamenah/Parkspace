@@ -46,6 +46,8 @@ export const ShowGarageBookings = ({
     },
   })
 
+  error && console.log(error)
+
   return (
     <div className="mt-4">
       <div className="flex justify-center">
@@ -55,7 +57,7 @@ export const ShowGarageBookings = ({
             placeholder="Search vehicle number"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-grow py-4 bg-transparent"
+            className="flex-grow py-4 bg-transparent focus:outline-none"
           />
         </div>
       </div>

@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     private readonly jwtService: JwtService,
     private readonly reflector: Reflector,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context)
     const req = ctx.getContext().req
@@ -40,7 +40,6 @@ export class AuthGuard implements CanActivate {
 
     try {
       const payload = await this.jwtService.verifyAsync(token)
-      console.log('problem1')
       const uid = payload.uid
       if (!uid) {
         throw new UnauthorizedException(

@@ -6,7 +6,7 @@ import { UpdateSlotInput } from './dtos/update-slot.input'
 
 @Injectable()
 export class SlotsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createSlotInput: CreateSlotInput) {
     return this.prisma.slot.create({
       data: createSlotInput,

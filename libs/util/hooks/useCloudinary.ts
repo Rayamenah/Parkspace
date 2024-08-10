@@ -1,9 +1,13 @@
 import { useState } from 'react'
-
+import { toast } from 'react-toastify'
 export const useCloudinaryUpload = () => {
   const [uploading, setUploading] = useState(false)
 
   const upload = async (fileList: FileList) => {
+    if (!fileList) {
+      toast.error('no image found')
+      return
+    }
     setUploading(true)
 
     try {
@@ -36,7 +40,7 @@ export const useCloudinaryUpload = () => {
       const uploadedImages = await Promise.all(uploadPromises)
       return uploadedImages
     } catch (error) {
-      throw new Error('Upload failed')
+      console.log(error)
     } finally {
       setUploading(false)
     }

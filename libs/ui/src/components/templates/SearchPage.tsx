@@ -1,21 +1,23 @@
 'use client'
+import { FormTypeSearchGarage } from '@parkspace/forms/src/searchGarages'
 import { initialViewState } from '@parkspace/util/constants'
-import { useCallback } from 'react'
+import { toLocalISOString } from '@parkspace/util/date'
+import { IconArrowDown, IconRotateClockwise2 } from '@tabler/icons-react'
+import { useCallback, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { ViewStateChangeEvent } from 'react-map-gl'
+import { HtmlInput } from '../atoms/HtmlInput'
+import { IconType } from '../molecules/IconTypes'
 import { Map } from '../organisms/map/Map'
 import { Panel } from '../organisms/map/Panel'
 import { SearchPlaceBox } from '../organisms/map/SearchPlacesBox'
 import { DefaultZoomControls } from '../organisms/map/ZoomControls'
-import { FormTypeSearchGarage } from '@parkspace/forms/src/searchGarages'
-import { useFormContext } from 'react-hook-form'
-import { toLocalISOString } from '@parkspace/util/date'
-import { IconArrowDown } from '@tabler/icons-react'
-import { HtmlInput } from '../atoms/HtmlInput'
-import { IconType } from '../molecules/IconTypes'
-import { ShowGarages } from '../organisms/search/ShowGarages'
 import { FilterSidebar } from '../organisms/search/FilterSidebar'
+import { ShowGarages } from '../organisms/search/ShowGarages'
+import { Loader } from '../molecules/Loader'
 
 export const SearchPage = () => {
+  const [loading, setLoading] = useState(true)
   const { register, setValue, watch, trigger } =
     useFormContext<FormTypeSearchGarage>()
   const formData = watch()
@@ -37,11 +39,17 @@ export const SearchPage = () => {
 
   return (
     <Map
-      onLoad={(e) => handleMapChange(e.target)}
+      onLoad={(e) => {
+        handleMapChange(e.target)
+        setLoading(false)
+      }}
       onDragEnd={(e) => handleMapChange(e.target)}
       onZoomEnd={(e) => handleMapChange(e.target)}
       initialViewState={initialViewState}
     >
+      {loading && (
+        <IconRotateClockwise2 className="animate-spin absolute top-1/2 left-1/2" />
+      )}
       <ShowGarages />
       <Panel position="left-top" className="mt-20">
         <div className="flex flex-col items-stretch">
@@ -59,7 +67,6 @@ export const SearchPage = () => {
                 {...register('startTime', {
                   onChange() {
                     trigger('startTime')
-                    // trigger('endTime')
                   },
                 })}
               />

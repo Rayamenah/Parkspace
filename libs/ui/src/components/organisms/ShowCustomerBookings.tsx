@@ -1,13 +1,12 @@
+import { useQuery } from '@apollo/client'
 import {
   BookingStatus,
   BookingsForCustomerDocument,
 } from '@parkspace/network/src/gql/generated'
 import { useTakeSkip } from '@parkspace/util/hooks/usePagination'
 import { useSession } from 'next-auth/react'
-import { useLazyQuery, useQuery } from '@apollo/client'
-import { useEffect } from 'react'
-import { ShowData } from './ShowData'
 import { CustomerBookingCard } from './CustomerBookingCard'
+import { ShowData } from './ShowData'
 
 export const ShowCustomerBookings = ({
   statuses,

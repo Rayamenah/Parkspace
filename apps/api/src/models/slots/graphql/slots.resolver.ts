@@ -17,13 +17,14 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Garage } from 'src/models/garages/graphql/entity/garage.entity'
 import { Booking } from 'src/models/bookings/graphql/entity/booking.entity'
+import { NotFoundException } from '@nestjs/common'
 
 @Resolver(() => Slot)
 export class SlotsResolver {
   constructor(
     private readonly slotsService: SlotsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => Slot)
@@ -60,6 +61,9 @@ export class SlotsResolver {
         },
       },
     })
+    if (!garage) {
+      throw new NotFoundException('no garage found')
+    }
 
     checkRowLevelPermission(
       user,
@@ -70,7 +74,7 @@ export class SlotsResolver {
       where: { garageId: args.garageId, type: args.type },
     })
 
-    const slots = Array.from({ length: count }).map((num, index) => ({
+    const slots = Array.from({ length: count }).map((_, index) => ({
       ...args,
       displayName: `${args.type} ${typeCount + index + 1}`,
     }))

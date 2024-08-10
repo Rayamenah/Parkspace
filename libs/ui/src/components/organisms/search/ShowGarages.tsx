@@ -12,7 +12,7 @@ export const ShowGarages = () => {
     SearchGaragesDocument,
   )
 
-  const { variables, debouncing } = useConvertSearchFormToVariables()
+  const { variables } = useConvertSearchFormToVariables()
 
   useEffect(() => {
     if (variables) searchGarages({ variables })

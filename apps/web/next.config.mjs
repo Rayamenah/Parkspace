@@ -1,4 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        hostname: 'api.mapbox.com',
+      },
+    ],
+  },
+}
 
-export default nextConfig;
+export default nextConfig

@@ -1,21 +1,25 @@
 'use client'
-import { useQuery } from '@apollo/client'
-import { CompaniesDocument } from '@parkspace/network/src/gql/generated'
-import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { CarScene } from '@parkspace/3d/src/scenes/CarScene'
+import { IconSearch } from '@tabler/icons-react'
+import Link from 'next/link'
 
 export default function Home() {
-  const { data, loading } = useQuery(CompaniesDocument)
-  const [open, setOpen] = useState(false)
   return (
-    <main className="p-8">
-      <div>
-        {data?.companies.map((company) => (
-          <div className="text-black" key={company.id}>
-            <div>{company.displayName}</div>
-            <div>{company.description}</div>
-          </div>
-        ))}
+    <main className="h-full">
+      <div className="absolute top-16 bottom-0 left-0 right-0">
+        {/* <CarScene /> */}
+      </div>
+      <div className="text-4xl mt-16 flex flex-col items-start space-y-3 sm:text-8xl">
+        <div className="z-10 inline-block px-3 text-primary mt-2">Need</div>{' '}
+        <div className="z-10 inline-block w-full max-w-md px-3 text-primary ">
+          parking?
+        </div>
+        <Link
+          href="/search"
+          className="z-10 flex items-center gap-2 px-3 py-2 text-xl font-medium text-primary underline underline-offset-4"
+        >
+          <IconSearch className='text-primary' /> Search now
+        </Link>
       </div>
     </main>
   )

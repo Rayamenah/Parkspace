@@ -1,11 +1,13 @@
 'use client'
 import { useDialogState } from '@parkspace/util/hooks/useDialogue'
 import { BaseComponent, MenuItem, Role } from '@parkspace/util/types'
+import { IconUser } from '@tabler/icons-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { Brand } from '../atoms/Brand'
 import { Button } from '../atoms/Button'
 import { Container } from '../atoms/Container'
+import { HeaderProfile } from '../molecules/HeaderProfile'
 import { Menus } from './Menus'
 import { NavSidebar } from './NavSidebar'
 
@@ -15,10 +17,9 @@ export type IHeaderProps = {
 } & BaseComponent
 
 export const Header = ({ type, menuItems }: IHeaderProps) => {
-  const session = useSession()
-  const uid = session?.data?.user?.uid
-  let [open, setOpen] = useDialogState(false)
-
+  const { data, status, } = useSession()
+  const uid = data?.user?.uid
+  const name = data?.user?.name
   return (
     <header>
       <nav className="fixed z-40 top-0 w-full shadow-md bg-white/50 backdrop-blur-md">
@@ -32,6 +33,7 @@ export const Header = ({ type, menuItems }: IHeaderProps) => {
               <>
                 <div className="gap-6 items-center hidden sm:text-sm sm:flex">
                   <Menus menuItems={menuItems} />
+                  <HeaderProfile name={name} icon={<IconUser />} />
                 </div>
 
                 <NavSidebar menuItems={menuItems} />
@@ -44,14 +46,14 @@ export const Header = ({ type, menuItems }: IHeaderProps) => {
                   </Button>
                 </Link>
                 <Link href="/login">
-                  <Button>Log in</Button>
+                  <Button className="hidden md:block">Log in</Button>
                 </Link>
               </>
             )}
           </div>
         </Container>
       </nav>
-      {/* <div className="h-16" /> */}
+      <div className="h-16" />
     </header>
   )
 }

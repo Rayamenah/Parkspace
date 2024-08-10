@@ -17,8 +17,8 @@ export const UserInfo = ({ children, className }: BaseComponent) => {
         className="w-16 h-16 object-cover border"
       />
       <div>
-        <div>{name}</div>
-        <div className="text-sm text-gray">{uid}</div>
+        <div>Hello, {name}</div>
+        <div className="text-xs text-gray">id: {uid}</div>
       </div>
       {children}
     </div>

@@ -10,9 +10,9 @@ export const LogoutButton = () => {
       onClick={() => {
         signOut()
       }}
-      className="flex gap-2"
+      className="flex gap-2 items-center"
     >
-      <IconDoorExit /> Logout
+      <IconDoorExit /> Sign out
     </Button>
   )
 }

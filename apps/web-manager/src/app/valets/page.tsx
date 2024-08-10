@@ -1,10 +1,10 @@
-import { ListCustomerBookings } from '@parkspace/ui/src/components/templates/ListCustomerBookings'
+import { ManageValets } from '@parkspace/ui/src/components/templates/ManageValets'
 import { IsLoggedIn } from '@parkspace/ui/src/components/organisms/IsLoggedIn'
 
 export default function Page() {
   return (
     <IsLoggedIn>
-      <ListCustomerBookings />
+      <ManageValets />
     </IsLoggedIn>
   )
 }

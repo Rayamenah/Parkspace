@@ -1,11 +1,11 @@
 import { BookingsForCustomerQuery } from '@parkspace/network/src/gql/generated'
-import { StartEndDateCard } from './DateCard'
-import { MapLink } from '../molecules/MapLink'
-import { StaticMapSimple } from './map/StaticMapSimple'
-import { TitleStrongValue, TitleValue } from '../atoms/TitleValue'
-import { Reveal } from '../molecules/Reveal'
-import { Accordion } from '../atoms/Accordion'
 import { format } from 'date-fns'
+import { Accordion } from '../atoms/Accordion'
+import { TitleStrongValue, TitleValue } from '../atoms/TitleValue'
+import { MapLink } from '../molecules/MapLink'
+import { Reveal } from '../molecules/Reveal'
+import { StartEndDateCard } from './DateCard'
+import { StaticMapSimple } from './map/StaticMapSimple'
 
 export interface IBookingCardProps {
   booking: NonNullable<BookingsForCustomerQuery['bookingsForCustomer']>[number]

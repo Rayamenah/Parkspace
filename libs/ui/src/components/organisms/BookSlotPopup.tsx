@@ -25,12 +25,14 @@ import { useSession } from 'next-auth/react'
 import { TotalPrice } from '@parkspace/util/types'
 import { ManageValets } from './ManageValets'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 export const BookSlotPopup = ({
   garage,
 }: {
   garage: SearchGaragesQuery['searchGarages'][0]
 }) => {
+  const router = useRouter()
   const session = useSession()
   const uid = session.data?.user?.uid
   const {
@@ -63,12 +65,13 @@ export const BookSlotPopup = ({
       <Form
         onSubmit={handleSubmit(async (data) => {
           if (!uid) {
-            alert('You are not logged in.')
+            toast('You are not logged in.')
+            router.push('/login')
             return
           }
           const bookingData: CreateBookingInput = {
             phoneNumber: data.phoneNumber,
-            customerId: uid,
+            customerId: uid ?? '',
             endTime: data.endTime,
             startTime: data.startTime,
             type: data.type,
@@ -78,13 +81,13 @@ export const BookSlotPopup = ({
             pricePerHour,
             ...(data.valet?.pickupInfo && data.valet?.dropoffInfo
               ? {
-                  valetAssignment: {
-                    pickupLat: data.valet?.pickupInfo?.lat,
-                    pickupLng: data.valet?.pickupInfo?.lng,
-                    returnLat: data.valet?.dropoffInfo?.lat,
-                    returnLng: data.valet?.dropoffInfo?.lng,
-                  },
-                }
+                valetAssignment: {
+                  pickupLat: data.valet?.pickupInfo?.lat,
+                  pickupLng: data.valet?.pickupInfo?.lng,
+                  returnLat: data.valet?.dropoffInfo?.lat,
+                  returnLng: data.valet?.dropoffInfo?.lng,
+                },
+              }
               : null),
           }
 
@@ -147,11 +150,10 @@ export const BookSlotPopup = ({
                         <Radio key={slot.type} value={slot.type}>
                           {({ checked }) => (
                             <div
-                              className={`cursor-default border-2 p-2 ${
-                                checked
-                                  ? 'border-primary-500 shadow-md'
-                                  : 'border-gray-200'
-                              }`}
+                              className={`cursor-default border-2 p-2 ${checked
+                                ? 'border-primary-500 shadow-md'
+                                : 'border-gray-200'
+                                }`}
                             >
                               <div className="flex items-center gap-2">
                                 {slot.type ? IconTypes[slot.type] : null}

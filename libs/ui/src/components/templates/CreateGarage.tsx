@@ -1,31 +1,29 @@
 'use client'
+import { useMutation } from '@apollo/client'
 import {
   FormProviderCreateGarage,
-  FormTypeCreateGarage,
-  useFormCreateGarage,
+  FormTypeCreateGarage
 } from '@parkspace/forms/src/createGarage'
-import { useMutation } from '@apollo/client'
-import { useCloudinaryUpload } from '@parkspace/util/hooks/useCloudinary'
 import {
   CreateGarageDocument,
   namedOperations,
 } from '@parkspace/network/src/gql/generated'
-import { Form } from '../atoms/Form'
-import { HtmlLabel } from '../atoms/HtmlLabel'
-import { HtmlInput } from '../atoms/HtmlInput'
-import { Button } from '../atoms/Button'
-import { HtmlTextArea } from '../atoms/HtmlTextArea'
-import { ImagePreview } from '../organisms/ImagePreview'
-import { Controller } from 'react-hook-form'
-import { Map } from '../organisms/map/Map'
 import { initialViewState } from '@parkspace/util/constants'
+import { useCloudinaryUpload } from '@parkspace/util/hooks/useCloudinary'
+import { ViewState } from '@parkspace/util/types'
+import { Controller, useFormContext } from 'react-hook-form'
+import { toast } from 'react-toastify'
+import { Button } from '../atoms/Button'
+import { Form } from '../atoms/Form'
+import { HtmlInput } from '../atoms/HtmlInput'
+import { HtmlLabel } from '../atoms/HtmlLabel'
+import { HtmlTextArea } from '../atoms/HtmlTextArea'
+import { AddSlots, GarageMapMarker } from '../organisms/CreateGarageComponents'
+import { ImagePreview } from '../organisms/ImagePreview'
+import { Map } from '../organisms/map/Map'
 import { Panel } from '../organisms/map/Panel'
 import { SearchPlaceBox } from '../organisms/map/SearchPlacesBox'
-import { ViewState } from '@parkspace/util/types'
 import { CenterOfMap, DefaultZoomControls } from '../organisms/map/ZoomControls'
-import { useFormContext } from 'react-hook-form'
-import { AddSlots, GarageMapMarker } from '../organisms/CreateGarageComponents'
-import { ToastContainer, toast } from '../molecules/Toast'
 
 const CreateGarageContent = () => {
   const {
@@ -46,6 +44,7 @@ const CreateGarageContent = () => {
   const [createGarage, { data, error, loading }] = useMutation(
     CreateGarageDocument,
     {
+      awaitRefetchQueries: true,
       refetchQueries: [namedOperations.Query.Garages],
       onCompleted: () => {
         reset()
@@ -70,12 +69,15 @@ const CreateGarageContent = () => {
               slotTypes,
             }) => {
               const uploadedImages = await upload(images)
-
+              if (!uploadedImages) {
+                toast.error('something is wrong with your iamge')
+                return
+              }
               const result = await createGarage({
                 variables: {
                   createGarageInput: {
                     Address: location,
-                    images: uploadedImages,
+                    images: uploadedImages ?? [],
                     Slots: slotTypes,
                     description,
                     displayName,

@@ -72,7 +72,7 @@ export const CreateManySlotsDialog = ({ garageId }: { garageId: number }) => {
               <HtmlInput
                 type="number"
                 placeholder="Price per hour"
-                {...register(`pricePerHour`, {
+                {...register('pricePerHour', {
                   valueAsNumber: true,
                 })}
               />
@@ -81,7 +81,7 @@ export const CreateManySlotsDialog = ({ garageId }: { garageId: number }) => {
               <HtmlInput
                 type="number"
                 placeholder="Enter the number of slots"
-                {...register(`count`, {
+                {...register('count', {
                   valueAsNumber: true,
                 })}
               />
