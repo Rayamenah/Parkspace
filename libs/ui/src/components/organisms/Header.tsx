@@ -17,7 +17,7 @@ export type IHeaderProps = {
 } & BaseComponent
 
 export const Header = ({ type, menuItems }: IHeaderProps) => {
-  const { data, status, } = useSession()
+  const { data, status } = useSession()
   const uid = data?.user?.uid
   const name = data?.user?.name
   return (

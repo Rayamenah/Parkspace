@@ -2,7 +2,6 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
-  Logger,
   UnauthorizedException,
 } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
@@ -17,7 +16,7 @@ export class AuthGuard implements CanActivate {
     private readonly jwtService: JwtService,
     private readonly reflector: Reflector,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context)
     const req = ctx.getContext().req
@@ -36,7 +35,7 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException('No token provided.')
     }
-    Logger.log(token)
+    // Logger.log(token)
 
     try {
       const payload = await this.jwtService.verifyAsync(token)
@@ -67,12 +66,12 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): Promise<boolean> {
     const requiredRoles = this.getMetadata<Role[]>('roles', context)
-    if (!requiredRoles || requiredRoles.length === 0) {
-      return true
-    }
     const userRoles = await this.getUserRoles(req.user.uid)
     req.user.roles = userRoles
 
+    if (!requiredRoles || requiredRoles.length === 0) {
+      return true
+    }
     return requiredRoles.some((role) => userRoles.includes(role))
   }
 

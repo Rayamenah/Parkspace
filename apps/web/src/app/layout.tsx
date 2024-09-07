@@ -9,7 +9,6 @@ import { Montserrat } from 'next/font/google'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-
 const montserrat = Montserrat({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Parkspace',
@@ -40,4 +39,3 @@ export default function RootLayout({
     </html>
   )
 }
-

@@ -2,7 +2,7 @@
 import { useMutation } from '@apollo/client'
 import {
   FormProviderCreateGarage,
-  FormTypeCreateGarage
+  FormTypeCreateGarage,
 } from '@parkspace/forms/src/createGarage'
 import {
   CreateGarageDocument,

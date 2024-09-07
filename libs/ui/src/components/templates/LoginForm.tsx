@@ -8,7 +8,7 @@ import { Form } from '../atoms/Form'
 import { HtmlInput } from '../atoms/HtmlInput'
 import { HtmlLabel } from '../atoms/HtmlLabel'
 import { toast } from 'react-toastify'
-import { useSession } from "next-auth/react"
+import { useSession } from 'next-auth/react'
 
 export interface ILoginFormProps {
   className?: string
@@ -38,7 +38,7 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
           email,
           password,
           redirects: false,
-          callbackUrl: '/'
+          callbackUrl: '/',
         })
         toast('signed in')
         if (result?.ok) {
@@ -48,7 +48,6 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
         if (result?.error) {
           toast('login failed try again.')
         }
-
       })}
     >
       <HtmlLabel title="Email" error={errors.email?.message}>

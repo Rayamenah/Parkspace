@@ -18,7 +18,7 @@ export default function Home() {
           href="/search"
           className="z-10 flex items-center gap-2 px-3 py-2 text-xl font-medium text-primary underline underline-offset-4"
         >
-          <IconSearch className='text-primary' /> Search now
+          <IconSearch className="text-primary" /> Search now
         </Link>
       </div>
     </main>

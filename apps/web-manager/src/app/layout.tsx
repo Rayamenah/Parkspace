@@ -1,14 +1,15 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import '@parkspace/ui/src/app/globals.css'
-import { MenuItem } from '@parkspace/util/types'
 import { ApolloProvider } from '@parkspace/network/src/config/apollo'
+import '@parkspace/ui/src/app/globals.css'
+import { Container } from '@parkspace/ui/src/components/atoms/Container'
 import { SessionProvider } from '@parkspace/ui/src/components/molecules/SessionProvider'
 import { ToastContainer } from '@parkspace/ui/src/components/molecules/Toast'
-import { Container } from '@parkspace/ui/src/components/atoms/Container'
 import { Header } from '@parkspace/ui/src/components/organisms/Header'
+import { MenuItem } from '@parkspace/util/types'
+import type { Metadata } from 'next'
+import { Montserrat } from 'next/font/google'
+import 'react-toastify/dist/ReactToastify.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Parkspace | Manager',
@@ -27,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-25`}>
+      <body className={`${montserrat.className} bg-gray-25`}>
         <SessionProvider>
           <ApolloProvider>
             <Header type="manager" menuItems={MENUITEMS} />

@@ -81,13 +81,13 @@ export const BookSlotPopup = ({
             pricePerHour,
             ...(data.valet?.pickupInfo && data.valet?.dropoffInfo
               ? {
-                valetAssignment: {
-                  pickupLat: data.valet?.pickupInfo?.lat,
-                  pickupLng: data.valet?.pickupInfo?.lng,
-                  returnLat: data.valet?.dropoffInfo?.lat,
-                  returnLng: data.valet?.dropoffInfo?.lng,
-                },
-              }
+                  valetAssignment: {
+                    pickupLat: data.valet?.pickupInfo?.lat,
+                    pickupLng: data.valet?.pickupInfo?.lng,
+                    returnLat: data.valet?.dropoffInfo?.lat,
+                    returnLng: data.valet?.dropoffInfo?.lng,
+                  },
+                }
               : null),
           }
 
@@ -150,10 +150,11 @@ export const BookSlotPopup = ({
                         <Radio key={slot.type} value={slot.type}>
                           {({ checked }) => (
                             <div
-                              className={`cursor-default border-2 p-2 ${checked
-                                ? 'border-primary-500 shadow-md'
-                                : 'border-gray-200'
-                                }`}
+                              className={`cursor-default border-2 p-2 ${
+                                checked
+                                  ? 'border-primary-500 shadow-md'
+                                  : 'border-gray-200'
+                              }`}
                             >
                               <div className="flex items-center gap-2">
                                 {slot.type ? IconTypes[slot.type] : null}

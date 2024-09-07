@@ -25,6 +25,7 @@ export const AddValet = () => {
     handleSubmit,
     formState: { errors },
   } = useFormCreateValet()
+
   const [open, setOpen] = useState(false)
   const { image } = watch()
 
@@ -52,9 +53,14 @@ export const AddValet = () => {
         <Form
           onSubmit={handleSubmit(async ({ image, ...data }) => {
             const images = await upload(image)
+            if (!images) {
+              toast.error('something went wrong with your image upload')
+              return
+            }
             await createValet({
               variables: { createValetInput: { ...data, image: images[0] } },
             })
+            // onError(() => toast.error('invalid credentials'))
           })}
         >
           <HtmlLabel title="UID" error={errors.uid?.message}>

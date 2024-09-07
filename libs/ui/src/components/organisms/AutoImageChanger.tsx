@@ -51,8 +51,9 @@ export const AutoImageChanger = ({
       <div className="absolute bottom-0 left-0 right-0 flex justify-center p-1 space-x-2">
         {images.map((_, index) => (
           <div
-            className={`h-2 rounded-full ${currentImageIndex === index ? 'bg-white w-4' : 'bg-gray-300 w-2'
-              }`}
+            className={`h-2 rounded-full ${
+              currentImageIndex === index ? 'bg-white w-4' : 'bg-gray-300 w-2'
+            }`}
             key={index}
           />
         ))}

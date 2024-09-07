@@ -8,9 +8,12 @@ import { UpdateValetInput } from './dtos/update-valet.input'
 export class ValetsService {
   constructor(private readonly prisma: PrismaService) {}
   create(createValetInput: CreateValetInput) {
-    return this.prisma.valet.create({
+    const valet = this.prisma.valet.create({
       data: createValetInput,
     })
+    if (!valet) throw new BadRequestException('invalid credentials')
+
+    return valet
   }
 
   findAll(args: FindManyValetArgs) {
