@@ -39,16 +39,16 @@ export const Header = ({ type, menuItems }: IHeaderProps) => {
                 <NavSidebar menuItems={menuItems} />
               </>
             ) : (
-              <>
+              <div className='flex gap-2'>
                 <Link href="/register">
-                  <Button variant="outlined" className="hidden md:block">
+                  <Button variant="outlined" className="md:block">
                     Register
                   </Button>
                 </Link>
                 <Link href="/login">
-                  <Button className="hidden md:block">Log in</Button>
+                  <Button className="md:block">Log in</Button>
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </Container>

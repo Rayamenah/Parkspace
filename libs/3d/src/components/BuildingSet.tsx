@@ -31,6 +31,7 @@ export const BuildingSet = ({
       {BUILDING_SETS[buildingSetIndex].map(({ length, position, width }, i) => (
         <>
           <Building
+            key={i}
             position={
               position.map((pos) => pos * 2) as [number, number, number]
             }
