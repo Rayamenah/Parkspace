@@ -46,7 +46,7 @@ export const ShowGarageBookings = ({
     },
   })
 
-  error && console.log(error)
+  // error && console.log(error)
 
   return (
     <div className="mt-4">

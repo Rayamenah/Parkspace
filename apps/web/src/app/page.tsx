@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <main className="h-full">
       <div className="absolute top-16 bottom-0 left-0 right-0">
-        {/* <CarScene /> */}
+        <CarScene />
       </div>
       <div className="text-4xl mt-16 flex flex-col items-start space-y-3 sm:text-8xl">
         <div className="z-10 inline-block px-3 text-primary mt-2">Need</div>{' '}

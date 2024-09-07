@@ -40,7 +40,8 @@ export const useCloudinaryUpload = () => {
       const uploadedImages = await Promise.all(uploadPromises)
       return uploadedImages
     } catch (error) {
-      console.log(error)
+      throw error
+      // console.log(error)
     } finally {
       setUploading(false)
     }

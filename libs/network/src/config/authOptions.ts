@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
 
           return { id: uid, name, image, email }
         } catch (err) {
-          console.log('error here', err)
+          throw err // console.log('error here', err)
           return null
         }
       },

@@ -40,10 +40,10 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
           redirects: false,
           callbackUrl: '/',
         })
-        toast('signed in')
         if (result?.ok) {
           reset()
-          // router.push('/')
+          router.push('/')
+          toast('signed in')
         }
         if (result?.error) {
           toast('login failed try again.')
