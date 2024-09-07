@@ -25,7 +25,7 @@ export class AdminsResolver {
   constructor(
     private readonly adminsService: AdminsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @Mutation(() => Admin)
   createAdmin(
@@ -71,7 +71,7 @@ export class AdminsResolver {
     @GetUser() user: GetUserType,
   ) {
     const admin = await this.prisma.admin.findUnique(args)
-    console.log('remove admin', user, admin.uid)
+    // console.log('remove admin', user, admin.uid)
     checkRowLevelPermission(user, admin.uid)
     return this.adminsService.remove(args)
   }
