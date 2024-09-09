@@ -3,13 +3,11 @@ import { useFormLogin } from '@parkspace/forms/src/login'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 import { Button } from '../atoms/Button'
 import { Form } from '../atoms/Form'
 import { HtmlInput } from '../atoms/HtmlInput'
 import { HtmlLabel } from '../atoms/HtmlLabel'
-import { toast } from 'react-toastify'
-import { useSession } from 'next-auth/react'
-
 export interface ILoginFormProps {
   className?: string
 }
@@ -22,17 +20,17 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
   } = useFormLogin()
 
   const router = useRouter()
-  const session = useSession()
+  // const session = useSession()
 
   return (
     <Form
       onSubmit={handleSubmit(async (data) => {
         const { email, password } = data
-        if (session?.data) {
-          router.push('/')
-          toast('already signed in.')
-          return
-        }
+        // if (session?.status == "authenticated") {
+        //   router.push('/')
+        //   toast('already signed in.')
+        //   return
+        // }
 
         const result = await signIn('credentials', {
           email,

@@ -29,7 +29,7 @@ export const Header = ({ type, menuItems }: IHeaderProps) => {
             <Brand type={type} shortForm className="block sm:hidden" />
           </Link>
           <div className="flex items-center gap-2">
-            {uid ? (
+            {status == 'authenticated' ? (
               <>
                 <div className="gap-6 items-center hidden sm:text-sm sm:flex">
                   <Menus menuItems={menuItems} />
