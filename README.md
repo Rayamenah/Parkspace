@@ -165,7 +165,7 @@ query SearchGarages(
 }
 ```
 
-#### Create Valet Request
+#### Create Booking
 
 ```graphql
 mutation createBookingTimeline(
